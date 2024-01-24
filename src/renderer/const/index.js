@@ -9,7 +9,7 @@ import {
 
 export const App_Routes_Links = [
   { path: '/app/home', name: 'home', icon: IconHome },
-  { path: '/app/tables', name: 'tables', icon: IconTable, isSub: true },
+  { path: '/app/tables', name: 'tablas', icon: IconTable, isSub: true },
   { path: '/app/editor', name: 'editor', icon: IconCode },
   { path: '/app/backup', name: 'backup', icon: IconDatabaseExport },
   { path: '/app/data', name: 'data', icon: IconReportAnalytics },

@@ -32,3 +32,6 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+
+
+https://clips.twitch.tv/RichSpicyShieldBCWarrior-fqphmc47vawfreWw

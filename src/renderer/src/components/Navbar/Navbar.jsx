@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion'
 import { Credits, DatabaseInfo } from '../shared'
 import { App_Routes_Links } from '../../../const'
 import { SubNavLinks, NavLinks } from '../shared/NavLinks'
@@ -19,14 +18,7 @@ function Navbar() {
       <section className="h-full p-3 flex flex-col gap-unit-md ">
         <Credits isHead={true} />
 
-        <motion.div
-          className="flex flex-col gap-1 grow mt-5"
-          layout
-          transition={{
-            opacity: { ease: 'linear' },
-            layout: { duration: 0.3 }
-          }}
-        >
+        <div className="flex flex-col gap-1 grow mt-5">
           {App_Routes_Links.map((link) => (
             <NavLinks
               to={link.path}
@@ -38,7 +30,7 @@ function Navbar() {
               {link.isSub && location.pathname.includes('tables') && <SubNavLinks links={tables} />}
             </NavLinks>
           ))}
-        </motion.div>
+        </div>
         <DatabaseInfo database={project} isHeader={true} />
       </section>
     </aside>

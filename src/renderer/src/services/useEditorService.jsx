@@ -9,19 +9,26 @@ export function useEditorService() {
   const setResults = useEditorStore((state) => state.setResults)
   const setCode = useEditorStore((state) => state.setCode)
 
-  const executeSqlCommand = async () => {
+  const executeSqlCommand = async ({ command, isEditor = true }) => {
     setLoader(true)
-
-    const res = await window.editor.executeSqlCommand({ project, command: code })
-    const query = JSON.parse(res)
-    if (query.error) {
-      setResults(query.error)
-      return
+    if (isEditor) {
+      const res = await window.editor.executeSqlCommand({ project, command: code })
+      const query = JSON.parse(res)
+      if (query.error) {
+        setResults(query.error)
+        return
+      }
+      setLoader(false)
+      setResults(query)
+      return query
     }
 
-    setLoader(false)
-    setResults(query)
-    return
+    if (!isEditor) {
+      const res = await window.editor.executeSqlCommand({ project, command })
+      const query = JSON.parse(res)
+      setLoader(false)
+      return query
+    }
   }
 
   const executeFileCommand = async ({ file }) => {

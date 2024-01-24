@@ -24,7 +24,7 @@ function TablesCreatedPage() {
         ) : (
           <>
             <ContainerTablesCreated
-              sx="grid grid-cols-2 lg:grid-cols-3 gap-4 justify-center align-middle items-center px-8"
+              sx="grid grid-cols-2 lg:grid-cols-4 gap-3 justify-center align-middle items-center"
               titleZone={<TitleContainer title="Tus Tablas" Icon={IconTable} />}
             >
               <Button

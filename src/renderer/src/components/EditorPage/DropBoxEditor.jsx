@@ -53,13 +53,16 @@ function MyDropbox({ titulo1, titulo2, msg, variant = 'default' }) {
       color: 'text-success-600 bg-success-400/20 border-success-400',
       Icon: IconFileLike
     },
-    default: { color: 'text-primary-500 bg-primary-400/5 border-primary-700', Icon: IconFile }
+    default: {
+      color: 'text-primary-500 bg-primary-900/20 hover:bg-primary-900/40 border-content2',
+      Icon: IconFile
+    }
   }
   const Icon = Type[variant]['Icon']
 
   return (
     <div
-      className={`h-full border-2 border-dashed rounded-small p-unit-md hover:bg-content1/60 hover:cursor-pointer flex lg:flex-col items-center justify-center align-middle gap-unit-md px-6 lg:px-10 ${Type[variant]['color']} transition-all`}
+      className={`h-full border-2 border-dashed rounded-small p-unit-md hover:bg-content1/60 hover:cursor-pointer flex lg:flex-col items-center justify-center align-middle gap-unit-md px-6 lg:px-10 ${Type[variant]['color']} transition-colors`}
     >
       <div>
         <Icon stroke={1.5} className="h-16 w-16" />

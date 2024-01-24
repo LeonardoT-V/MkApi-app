@@ -80,6 +80,58 @@ class ProjectIPC {
     return { data: projects }
   }
 
+  async editOneProject({ project }) {
+    console.log(project)
+    if (!fs.existsSync(`${this.APPDATA}/${project.file}.json`)) {
+      return { error: { description: `El projecto ${project.file} no existe` } }
+    }
+
+    /* const allFiles = fs.readdirSync(this.APPDATA, {
+      encoding: 'utf-8',
+      withFileTypes: false
+    }) */
+    /* if (allFiles.includes(`${project.file}.json`)) {
+       if (newProject.file !== project.file) {
+        return {
+          error: { description: `El projecto ${project.newNameFile} ya existe, use otro nombre` }
+        }
+      }
+      return {
+        error: { description: `El projecto ${project.file} ya existe, use otro nombre` }
+      }
+    } */
+
+    let projectParse = JSON.parse(
+      fs.readFileSync(`${this.APPDATA}/${project.file}.json`, {
+        encoding: 'utf-8'
+      })
+    )
+
+    projectParse = { ...projectParse, ...project }
+
+    /* if (project.newNameFile !== project.namefile) {
+      fs.renameSync(
+        `${this.APPDATA}/${project.namefile}.json`,
+        `${this.APPDATA}/${project.newNameFile}.json`
+      )
+    } */
+
+    /* projectParse.name = project.newNameFile
+    projectParse.db = {
+      username: project.username,
+      password: project.password,
+      hostname: project.hostname,
+      port: project.port,
+      database: project.database
+    } */
+
+    fs.writeFileSync(`${this.APPDATA}/${project.file}.json`, JSON.stringify(projectParse, null, 2))
+
+    return {
+      response: { description: `El projecto ${project.file} ha sido actualizado` }
+    }
+  }
+
   async openProject({ project }) {
     console.log({ project })
     const connect = await this._tryconectionToDB({ project })
@@ -102,7 +154,7 @@ class ProjectIPC {
       const errorStatus = searchCodeErrorPg(dataConnect)
       return { error: errorStatus }
     }
-    //global.projectKey = project
+    global.projectKey = { ...project, password }
     return false
   }
 }

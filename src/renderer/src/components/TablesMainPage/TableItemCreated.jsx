@@ -14,9 +14,9 @@ function TableItemCreated({ sx }) {
         rows={rows}
         paginationRender={
           <div className="flex justify-end gap-4 px-8 pb-4">
-            <Button variant="faded" color="primary" startContent={<IconBinaryTree2 />}>
+            {/* <Button variant="faded" color="primary" startContent={<IconBinaryTree2 />}>
               Agregar relaciones
-            </Button>
+            </Button> */}
             <Button
               startContent={<IconColumnInsertRight />}
               color="primary"

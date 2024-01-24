@@ -30,22 +30,14 @@ class DatabaseIPC {
   async allAtributesDatabase({ project }) {
     const pool = createPool(project)
     const structObj = {}
+
     const { rows } = await pool.query(
-      `SELECT
-      attrelid::regclass AS table_name,
-      attname            AS column_name,
-      pg_catalog.col_description(attrelid, attnum) as column_comment,
-      atttypid::regtype  AS column_datatype
-      FROM pg_attribute
-      INNER JOIN pg_class ON pg_class.oid = attrelid
-      WHERE attrelid IN (
-          SELECT pg_class.oid
-          FROM pg_class
-          INNER JOIN pg_namespace ON pg_namespace.oid = pg_class.relnamespace
-          WHERE pg_namespace.nspname IN ('public') AND pg_class.relkind IN ('r', 't')
-      )
-      AND attnum > 0 AND attisdropped IS FALSE
-      ORDER BY pg_class.relname, pg_attribute.attnum`
+      ` SELECT
+      *
+      FROM
+      information_schema.columns
+      WHERE
+      table_schema = 'public';`
     )
 
     rows.map((row) => {
@@ -56,6 +48,7 @@ class DatabaseIPC {
       const hola = rows.filter((item) => row === item.table_name)
       structObj[row] = hola
     }
+    global.tablesInDB = structObj
     return structObj
   }
 

@@ -13,13 +13,13 @@ function EditorPage() {
     <>
       <section className="flex flex-col gap-4">
         <section className="flex flex-col max-h-unit-8xl h-unit-8xl lg:flex-row gap-4">
-          <div className="bg-content1 h-full grow p-4 rounded-small space-y-4 flex flex-col">
+          <div className="bg-content1/40 h-full grow p-4 rounded-small space-y-4 flex flex-col">
             <TitleContainer
               title="Editor Sql"
               sx={{ title: 'text-lg', icon: 'h-7 w-7' }}
               Icon={IconCode}
             />
-            <div className="overflow-y-scroll rounded-md border-content2 border ">
+            <div className="overflow-y-scroll rounded-md border-content2 border bg-content1">
               <TextEditor />
             </div>
           </div>

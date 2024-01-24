@@ -1,10 +1,13 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import ProjectIPC from './events/projectIpc'
 import DatabaseIPC from './events/databaseIpc'
 import EditorIPC from './events/editorIpc'
+import { openExpressServer, stopExpressServer } from './events/apiIcp'
+import OtherIPC from './events/otherIpc'
+import BackupIPC from './events/backupIpc'
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -16,11 +19,18 @@ function createWindow() {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
-    }
+    },
+    darkTheme: true,
+    backgroundMaterial: 'mica'
   })
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+  })
+
+  mainWindow.webContents.on('new-window', (e, url) => {
+    e.preventDefault()
+    require('electron').shell.openExternal(url)
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -54,10 +64,14 @@ app.whenReady().then(() => {
   const projectIpc = new ProjectIPC(app)
   const databaseIpc = new DatabaseIPC(app)
   const editorIpc = new EditorIPC(app)
+  const otherIpc = new OtherIPC(app)
+  const backupIpc = new BackupIPC(app)
 
   ipcMain.handle('project:create-project', (_, { project }) =>
     projectIpc.createNewProject({ project })
   )
+  ipcMain.handle('project:edit-project', (_, { project }) => projectIpc.editOneProject({ project }))
+
   ipcMain.handle('project:get-all-project', () => projectIpc.getAllProject())
   ipcMain.handle('project:open-project', (_, { project }) => projectIpc.openProject({ project }))
 
@@ -75,6 +89,22 @@ app.whenReady().then(() => {
     editorIpc.executeFileCommand({ project, path })
   )
 
+  ipcMain.handle('api:start-local-server', (_, { port }) => openExpressServer({ port }))
+  ipcMain.handle('api:stop-local-server', () => stopExpressServer())
+
+  ipcMain.handle('other:select-directory', () => otherIpc.selectDirectoryPc())
+  ipcMain.handle('other:open-file-explorer', (_, { path }) => otherIpc.openFileExplorer({ path }))
+
+  ipcMain.handle('backup:execute-command', (_, { project }) =>
+    backupIpc.execGenerateCommand({ project })
+  )
+  ipcMain.handle('backup:read-backup-content', (_, { project, originalName }) =>
+    backupIpc.readBackupFileContent({ project, originalName })
+  )
+  ipcMain.handle('backup:read-folder-backup', (_, { project }) =>
+    backupIpc.readDirectoryForBackup({ project })
+  )
+
   createWindow()
 
   app.on('activate', function () {
@@ -82,6 +112,8 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  nativeTheme.themeSource = 'dark'
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -14,7 +14,8 @@ function HighlightingCode({ languaje = 'sql', code = '', ...props }) {
           backgroundColor: 'transparent',
           height: '100%',
           margin: 0,
-          padding: 0
+          padding: 0,
+          border: 0
         }}
       >
         <code className={`language-${languaje}`}>{code}</code>

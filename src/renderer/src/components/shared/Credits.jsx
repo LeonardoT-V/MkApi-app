@@ -19,7 +19,7 @@ function Credits({ isHead = false }) {
         <>
           <Divider orientation="vertical" />
           <div className="text-xs basis-0 grow text-gray-300">
-            <p>Leonardo Toro</p>
+            <p>Carranza Delgado</p>
             <p>Leonardo Toro</p>
           </div>
         </>
