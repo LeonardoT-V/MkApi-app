@@ -27,7 +27,8 @@ const project = {
   createNewProject: ({ project }) => ipcRenderer.invoke('project:create-project', { project }),
   getAllProject: () => ipcRenderer.invoke('project:get-all-project'),
   openProject: ({ project }) => ipcRenderer.invoke('project:open-project', { project }),
-  editProject: ({ project }) => ipcRenderer.invoke('project:edit-project', { project })
+  editProject: ({ project }) => ipcRenderer.invoke('project:edit-project', { project }),
+  deleteProject: ({ project }) => ipcRenderer.invoke('project:delete-project', { project })
 }
 const editor = {
   executeSqlCommand: ({ project, command }) =>

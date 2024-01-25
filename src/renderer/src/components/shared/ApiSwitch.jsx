@@ -14,7 +14,7 @@ function ApiSwitch({ sx }) {
   return (
     <section className={`space-y-1 ${sx}`}>
       <div className="flex gap-2 items-center">
-        <h2 className="text-lg font-medium text-warning-700">Servicio de la API</h2>
+        <h2 className="text-lg font-medium text-warning-700">Servició de la API</h2>
       </div>
       <div className="flex gap-4 md:gap-3 flex-col lg:flex-row">
         <Input

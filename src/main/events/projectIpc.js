@@ -80,6 +80,17 @@ class ProjectIPC {
     return { data: projects }
   }
 
+  async deleteOneProject({ project }) {
+    console.log(project)
+    if (!fs.existsSync(`${this.APPDATA}/${project.file}.json`)) {
+      return { error: { description: `El projecto ${project.file} no existe` } }
+    }
+
+    fs.rmSync(`${this.APPDATA}/${project.file}.json`)
+
+    return { response: { description: `Project ${project.file} deleted` } }
+  }
+
   async editOneProject({ project }) {
     console.log(project)
     if (!fs.existsSync(`${this.APPDATA}/${project.file}.json`)) {

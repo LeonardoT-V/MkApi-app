@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useProject } from '../hooks/useProject'
 import { useEditorStore } from '../stores/editorStore'
+import toast from '../utils/toast'
 
 export function useEditorService() {
   const [loader, setLoader] = useState(false)
@@ -44,9 +45,16 @@ export function useEditorService() {
     return res
   }
 
+  const copyCodeSnippets = async ({ data }) => {
+    await navigator.clipboard.writeText(data)
+    toast.successToast(0, 'Elemento copiado', 'Se ha guardado en el portapapeles')
+    return
+  }
+
   return {
     executeSqlCommand,
     loader,
-    executeFileCommand
+    executeFileCommand,
+    copyCodeSnippets
   }
 }

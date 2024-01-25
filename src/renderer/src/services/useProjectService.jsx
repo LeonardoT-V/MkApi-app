@@ -24,12 +24,27 @@ export function useGetAllProject() {
     setFetcher((r) => !r)
   }
 
+  const deleteOneProject = async ({ project }) => {
+    const toastId = toast.loadingToast('Borrando projecto')
+    const { error } = await window.project.deleteProject({ project })
+    if (error) {
+      toast.errorToast(toastId, 'Ha ocurrido un error', error.description)
+      return
+    }
+    toast.successToast(toastId, 'Proyecto borrado correctamente')
+    reFetch()
+    window.location.reload()
+    return
+  }
+
   return {
     getAllProject,
     setFetcher,
     loader,
     projects,
-    reFetch
+    reFetch,
+    deleteOneProject,
+    fetcher
   }
 }
 
@@ -69,6 +84,7 @@ export function useProjectService() {
   const closeProject = () => {
     deleteProjectStore()
     navigate('/')
+    window.location.reload()
   }
 
   return {

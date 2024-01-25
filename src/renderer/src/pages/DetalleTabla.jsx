@@ -1,15 +1,16 @@
 import { useParams, useRouteLoaderData } from 'react-router-dom'
 import { TitleContainer } from '../components/shared'
-import { Accordion, AccordionItem, Button, Divider, Input, Switch } from '@nextui-org/react'
-import HighlightingCode from '../components/shared/HighlightingCode'
+import { Accordion, AccordionItem, Divider, Input } from '@nextui-org/react'
 import { IconColumns3 } from '@tabler/icons-react'
-import { IconPencil } from '@tabler/icons-react'
+import AddNewColumns from '../components/DataPage/AddNewColumns'
+import { extractDefaultValueTable } from '../utils/queryMethods'
+import RemoveColumns from '../components/DataPage/RemoveTables'
 
 function CreateProjectPage() {
   const { nameTable } = useParams()
   const TablesObject = useRouteLoaderData('appRoot')
   const table = TablesObject[nameTable]
-  const query = `Alter table ${nameTable}`
+
   return (
     <main className="space-y-8">
       <TitleContainer title={nameTable} />
@@ -37,6 +38,7 @@ function CreateProjectPage() {
                       labelPlacement="outside-left"
                       color="primary"
                       variant="faded"
+                      isDisabled
                     />
                     <Input
                       label="Tipo"
@@ -44,16 +46,18 @@ function CreateProjectPage() {
                       labelPlacement="outside-left"
                       color="primary"
                       variant="faded"
+                      isDisabled
                     />
                     <Input
                       label="Default"
-                      value={tab.column_default}
+                      value={extractDefaultValueTable(tab.column_default)}
                       labelPlacement="outside-left"
                       color="primary"
                       variant="faded"
+                      isDisabled
                     />
                   </div>
-                  <div className="grow flex flex-col gap-4">
+                  {/* <div className="grow flex flex-col gap-4">
                     <div className="bg-content2 p-4 rounded-small">
                       <HighlightingCode code={query} />
                     </div>
@@ -64,32 +68,19 @@ function CreateProjectPage() {
                     >
                       Modificar
                     </Button>
-                  </div>
+                  </div> */}
                 </section>
               </AccordionItem>
             ))}
           </Accordion>
         </section>
       </section>
-      <section className="space-y-2">
-        <header className="flex items-center gap-4">
-          <h4 className="text-xl text-warning-600">Agregar nueva columna</h4>
-          <Divider className="flex-1" />
-        </header>
-        <div className="flex gap-2">
-          <Input label="nombre" labelPlacement="outside" placeholder="nombre" />
-          <Input label="tipo" labelPlacement="outside" placeholder="tipo" />
-          <Input label="default" labelPlacement="outside" placeholder="default" />
-          <Input label="parametro" labelPlacement="outside" placeholder="parametro" />
-          <Switch size="sm">sera null?</Switch>
+      <section className="flex gap-16 shadow-xl justify-end bg-primary-900/20 border w-fit ml-auto p-4 rounded-small border-content2">
+        <div className="space-y-2 w-64">
+          <AddNewColumns table={nameTable} />
         </div>
-        <div className="flex flex-col gap-unit-sm">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg text-warning-600 font-bold">
-              Salida de codigo <span className="text-gray-200">SQL</span>
-            </h3>
-          </div>
-          <HighlightingCode code={query} />
+        <div className="space-y-2 w-64">
+          <RemoveColumns table={nameTable} />
         </div>
       </section>
     </main>

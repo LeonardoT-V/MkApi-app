@@ -70,6 +70,9 @@ app.whenReady().then(() => {
   ipcMain.handle('project:create-project', (_, { project }) =>
     projectIpc.createNewProject({ project })
   )
+  ipcMain.handle('project:delete-project', (_, { project }) =>
+    projectIpc.deleteOneProject({ project })
+  )
   ipcMain.handle('project:edit-project', (_, { project }) => projectIpc.editOneProject({ project }))
 
   ipcMain.handle('project:get-all-project', () => projectIpc.getAllProject())

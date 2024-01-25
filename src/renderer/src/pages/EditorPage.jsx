@@ -1,10 +1,10 @@
 import { IconCode } from '@tabler/icons-react'
 import { TitleContainer } from '../components/shared'
+import TableResults from '../components/shared/TableResults'
 import TextEditor from '../components/EditorPage/TextEditor'
 import DropBoxEditor from '../components/EditorPage/DropBoxEditor'
 import ActionEditorSide from '../components/EditorPage/ActionEditorSide'
 import { useEditorStore } from '../stores/editorStore'
-import TableEditorContainer from '../components/EditorPage/TableEditorContainer'
 import ErrorQueryEditor from '../components/EditorPage/ErrorQueryEditor'
 
 function EditorPage() {
@@ -29,7 +29,11 @@ function EditorPage() {
           </div>
         </section>
         <section className="">
-          {results?.code ? <ErrorQueryEditor error={results} /> : <TableEditorContainer />}
+          {results?.code ? (
+            <ErrorQueryEditor error={results} />
+          ) : (
+            <TableResults rows={results?.rows} editCol={false} />
+          )}
         </section>
       </section>
     </>

@@ -1,7 +1,11 @@
-import { Button } from '@nextui-org/react'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react'
 import { IconDatabase, IconServer2, IconUser, IconDotsVertical } from '@tabler/icons-react'
+import { useGetAllProject, useProjectService } from '../../services/useProjectService'
 
 function DatabaseInfo({ database, isHeader = false, clickContainer, clickOpt }) {
+  const { closeProject } = useProjectService()
+  const { deleteOneProject } = useGetAllProject()
+
   return (
     <article
       onClick={clickContainer}
@@ -40,15 +44,28 @@ function DatabaseInfo({ database, isHeader = false, clickContainer, clickOpt }) 
           </div>
         </div>
       </section>
-      <Button
-        isIconOnly
-        className="absolute top-2 right-2"
-        variant="light"
-        size="sm"
-        onClick={clickOpt}
-      >
-        <IconDotsVertical />
-      </Button>
+
+      <Dropdown>
+        <DropdownTrigger>
+          <Button
+            isIconOnly
+            className="absolute top-2 right-2"
+            variant="light"
+            size="sm"
+            onClick={clickOpt}
+          >
+            <IconDotsVertical />
+          </Button>
+        </DropdownTrigger>
+        <DropdownMenu aria-label="Dynamic Actions">
+          {isHeader && <DropdownItem onClick={() => closeProject()}>Cerrar proyecto</DropdownItem>}
+          {!isHeader && (
+            <DropdownItem onClick={() => deleteOneProject({ project: database })}>
+              Borrar
+            </DropdownItem>
+          )}
+        </DropdownMenu>
+      </Dropdown>
     </article>
   )
 }

@@ -39,7 +39,7 @@ function ContainerProjects() {
   }
 
   return (
-    <div className="grow grid grid-cols-2 gap-4 px-4 py-1 my-7 overflow-y-scroll w-full items-center">
+    <div className="grow grid grid-cols-2 lg:grid-cols-4 gap-4 py-1 my-7 overflow-y-scroll w-full items-center">
       {projects.map((project) => (
         <DatabaseInfo
           key={project.file}

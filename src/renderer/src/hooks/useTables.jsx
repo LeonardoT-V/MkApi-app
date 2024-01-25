@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useRouteLoaderData } from 'react-router-dom'
+import { useRevalidator, useRouteLoaderData } from 'react-router-dom'
 import { useTableStore } from '../stores/tableStore'
 // import { useTableStore } from '../store/tableStore'
 
 export const useTables = () => {
   const data = useRouteLoaderData('appRoot')
   const [tables, setTables] = useState(data)
+  const reva = useRevalidator()
   useEffect(() => {
     setTables(data)
-  }, [data, tables])
+  }, [data, tables, reva.state])
 
   const displayTableName = Object.keys(tables) || []
 

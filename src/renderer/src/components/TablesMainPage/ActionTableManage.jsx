@@ -6,12 +6,14 @@ import TitleContainer from '../shared/TitleContainer'
 import { useTableStore } from '../../stores/tableStore'
 import { IconTableColumn } from '@tabler/icons-react'
 import { useTableService } from '../../services/useTableService'
+import { useNavigate } from 'react-router-dom'
 
 function ActionTableManage() {
   const setOpenDialog = useTableStore((state) => state.setOpenDialog)
   const tableName = useTableStore((state) => state.tableName)
   const resetTable = useTableStore((state) => state.resetTable)
   const { createNewTable } = useTableService()
+  const navigate = useNavigate()
 
   return (
     <>
@@ -54,7 +56,11 @@ function ActionTableManage() {
               variant="solid"
               size="md"
               startContent={<IconPlus stroke={1.5} />}
-              onClick={createNewTable}
+              onClick={() =>
+                createNewTable(() => {
+                  navigate(`/app/tables/${tableName}`)
+                })
+              }
             >
               Crear Tabla
             </Button>

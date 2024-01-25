@@ -2,6 +2,7 @@ import DialogContainer from '../shared/DialogContainer'
 import { IconAlertHexagon } from '@tabler/icons-react'
 
 function ErrorQueryEditor({ error }) {
+  console.log(error)
   return (
     <DialogContainer color="danger" sx="py-6 px-8 flex-col items-center">
       <IconAlertHexagon size={64} />
