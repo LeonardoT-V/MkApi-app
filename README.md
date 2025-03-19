@@ -1,10 +1,8 @@
-# tesis-app
+# MkApi
 
-An Electron application with React
+Aplicación de escritorio que permite administrar bases de datos PostgreSQL para gestionar sus tablas, ejecutar consultas SQL, leer archivos SQL, gestionar de copias de seguridad, automatizar la creación de una API, editor de texto y otras funciones.
 
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+![mkapi app](img-mkapi.webp)
 
 ## Project Setup
 
